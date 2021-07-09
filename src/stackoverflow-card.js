@@ -25,15 +25,9 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
-    gold = "#f1fa8c";
-    silver = "#6272a4";
-    bronze = "#ffb86c";
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
-    gold = "#F1B600";
-    silver = "#9A9B9E";
-    bronze = "#AB825F";
   } else {
     // fallback
     if (theme !== "stackoverflow-light") {
@@ -41,10 +35,11 @@ const StackOverflowCard = async (data, ratingText, theme) => {
     }
     background = "#fff";
     foreground = "#0f0f0f";
-    gold = "#F1B600";
-    silver = "#9A9B9E";
-    bronze = "#AB825F";
   }
+
+  const gold = "#F1B600";
+  const silver = "#9A9B9E";
+  const bronze = "#AB825F";
 
   const width = 300;
   const height = 120;
