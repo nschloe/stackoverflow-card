@@ -1,3 +1,5 @@
+const icons = require("./icons.js");
+
 // https://stackoverflow.com/a/9462382/
 function nFormatter(num, digits) {
   const lookup = [
@@ -25,6 +27,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
+    iconColor = "#8be9fd";
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
@@ -41,11 +44,12 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   const silver = "#9A9B9E";
   const bronze = "#AB825F";
 
-  const width = 300;
+  const width = 320;
   const height = 120;
   const fontSize = 12;
-  const xOffset1 = 13;
-  const xOffset2 = 150;
+  const xOffset0 = 13;
+  const xOffset1 = 35;
+  const xOffset2 = 170;
   const baseYOffset = 48;
   const lineHeight = 17;
   const badgeRadius = 3.5;
@@ -81,30 +85,37 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        font-weight="bold"
       >
         <tspan x="${xOffset1}" y="${baseYOffset}">Total Reputation:</tspan>
-        <tspan x="${xOffset2}" y="${baseYOffset}">${nFormatter(
-    data.reputation,
-    1
-  )}</tspan>
-        <tspan x="${xOffset1}" y="${
-    baseYOffset + lineHeight
-  }">Reputation this Year:</tspan>
-        <tspan x="${xOffset2}" y="${baseYOffset + lineHeight}">+${nFormatter(
-    data.reputation_change_year,
-    1
-  )}</tspan>
-        <tspan x="${xOffset1}" y="${
-    baseYOffset + 2 * lineHeight
-  }">Rating:</tspan>
-        <tspan x="${xOffset2}" y="${
-    baseYOffset + 2 * lineHeight
-  }">${ratingText}</tspan>
-        <tspan x="${xOffset1}" y="${
-    baseYOffset + 3 * lineHeight
-  }">Badges:</tspan>
-        <!--tspan x="${xOffset2}" y="${
-    baseYOffset + 3 * lineHeight
-  }">okay</tspan-->
+        <tspan x="${xOffset2}" y="${baseYOffset}">
+          ${nFormatter(data.reputation, 1)}
+        </tspan>
+        <tspan x="${xOffset1}" y="${baseYOffset + lineHeight}">
+          Reputation this Year:
+        </tspan>
+        <tspan x="${xOffset2}" y="${baseYOffset + lineHeight}">
+          +${nFormatter(data.reputation_change_year, 1)}
+        </tspan>
+        <tspan x="${xOffset1}" y="${baseYOffset + 2 * lineHeight}">
+          Rating:
+        </tspan>
+        <tspan x="${xOffset2}" y="${baseYOffset + 2 * lineHeight}">
+          ${ratingText}
+        </tspan>
+        <tspan x="${xOffset1}" y="${baseYOffset + 3 * lineHeight}">
+          Badges:
+        </tspan>
       </text>
+      <g fill="${iconColor}" transform="translate(${xOffset0},36) scale(0.9)" >
+        ${icons.reputation}
+      </g>
+      <g fill="${iconColor}" transform="translate(${xOffset0+1},52) scale(0.9)" >
+        ${icons.arrowUp}
+      </g>
+      <g fill="${iconColor}" transform="translate(${xOffset0+3},72) scale(0.9)" >
+        ${icons.achievementsSm}
+      </g>
+      <g fill="${iconColor}" transform="translate(${xOffset0+2},90) scale(0.8)" >
+        ${icons.medal}
+      </g>
       <g fill="${gold}">
         <circle
          cx="${xOffset2 + badgeRadius}"

@@ -24,9 +24,7 @@ http
     const json = await responseArticles.json();
 
     if (!json.items || json.items.length === 0) {
-      res.write(
-        JSON.stringify({ error: "Failed fetching data" })
-      );
+      res.write(JSON.stringify({ error: "Failed fetching data" }));
       res.end();
       return;
     }
