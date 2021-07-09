@@ -1,0 +1,20 @@
+{
+  "name": "stackoverflow-card",
+  "version": "0.0.1",
+  "description": "StackOverflow Card",
+  "repository": "https://github.com/nschloe/stackoverflow-card",
+  "bugs": {
+    "url": "https://github.com/nschloe/stackoverflow-card/issues"
+  },
+  "author": "Nico Schlömer",
+  "license": "GPL-3.0-or-later",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "format": "prettier --write src *.js",
+    "lint": "prettier --check src *.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
