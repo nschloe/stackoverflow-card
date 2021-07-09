@@ -27,7 +27,6 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
-    iconColor = "#8be9fd";
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
@@ -40,17 +39,19 @@ const StackOverflowCard = async (data, ratingText, theme) => {
     foreground = "#0f0f0f";
   }
 
+  iconColor = foreground;
+
   const gold = "#F1B600";
   const silver = "#9A9B9E";
   const bronze = "#AB825F";
 
   const width = 320;
-  const height = 120;
+  const height = 125;
   const fontSize = 12;
   const xOffset0 = 13;
   const xOffset1 = 35;
   const xOffset2 = 170;
-  const baseYOffset = 48;
+  const baseYOffset = 52;
   const lineHeight = 17;
   const badgeRadius = 3.5;
   const fontFamily = "Arial-BoldMT, Arial";
@@ -70,14 +71,17 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        height="${height}"
        rx="${borderRadius}"
       />
-      <text
+      <g fill="${foreground}" transform="translate(${xOffset0+1},0) scale(0.9)" >
+        ${icons.logo}
+      </g>
+      <!--text
        font-family="${fontFamily}"
        font-size="15"
        font-weight="bold"
        fill="${foreground}"
       >
         <tspan x="12" y="23">StackOverflow</tspan>
-      </text>
+      </text-->
       <text
        font-family="${fontFamily}"
        font-size="${fontSize}"
@@ -104,16 +108,16 @@ const StackOverflowCard = async (data, ratingText, theme) => {
           Badges:
         </tspan>
       </text>
-      <g fill="${iconColor}" transform="translate(${xOffset0},36) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0},40) scale(0.9)" >
         ${icons.reputation}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+1},52) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+1},56) scale(0.9)" >
         ${icons.arrowUp}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+3},72) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+3},76) scale(0.9)" >
         ${icons.achievementsSm}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+2},90) scale(0.8)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+2},92) scale(0.8)" >
         ${icons.medal}
       </g>
       <g fill="${gold}">
