@@ -113,10 +113,10 @@ const StackOverflowCard = async (data, ratingText, theme) => {
         </tspan>
       </text>
       <g fill="${iconColor}" transform="translate(${xOffset0},40) scale(0.9)" >
-        ${icons.reputation}
+        ${icons.coinsMono}
       </g>
       <g fill="${iconColor}" transform="translate(${xOffset0+1},56) scale(0.9)" >
-        ${icons.arrowUp}
+        ${icons.reputation}
       </g>
       <g fill="${iconColor}" transform="translate(${xOffset0+3},76) scale(0.9)" >
         ${icons.achievementsSm}
