@@ -55,7 +55,8 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   const xOffset0 = 13;
   const xOffset1 = 35;
   const xOffset2 = 170;
-  const baseYOffset = 52;
+  const yOffset0 = 5;
+  const baseYOffset = 57;
   const lineHeight = 17;
   const badgeRadius = 3.5;
   const fontFamily = "Arial-BoldMT, Arial";
@@ -75,17 +76,9 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        height="${height}"
        rx="${borderRadius}"
       />
-      <g fill="${foreground}" transform="translate(${xOffset0+1},0) scale(0.9)" >
+      <g fill="${foreground}" transform="translate(${xOffset0+1},${yOffset0}) scale(0.9)" >
         ${logo(logoColor)}
       </g>
-      <!--text
-       font-family="${fontFamily}"
-       font-size="15"
-       font-weight="bold"
-       fill="${foreground}"
-      >
-        <tspan x="12" y="23">StackOverflow</tspan>
-      </text-->
       <text
        font-family="${fontFamily}"
        font-size="${fontSize}"
@@ -112,16 +105,16 @@ const StackOverflowCard = async (data, ratingText, theme) => {
           Badges:
         </tspan>
       </text>
-      <g fill="${iconColor}" transform="translate(${xOffset0},40) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0},${baseYOffset-12}) scale(0.9)" >
         ${icons.coinsMono}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+1},56) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+1},${baseYOffset+4}) scale(0.9)" >
         ${icons.reputation}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+3},76) scale(0.9)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+3},${baseYOffset+24}) scale(0.9)" >
         ${icons.achievementsSm}
       </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+2},92) scale(0.8)" >
+      <g fill="${iconColor}" transform="translate(${xOffset0+2},${baseYOffset+40}) scale(0.8)" >
         ${icons.medal}
       </g>
       <g fill="${gold}">
