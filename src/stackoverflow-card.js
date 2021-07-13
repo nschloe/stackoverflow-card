@@ -1,4 +1,5 @@
 const icons = require("./icons.js");
+const logo = require("./logo.js");
 
 // https://stackoverflow.com/a/9462382/
 function nFormatter(num, digits) {
@@ -60,7 +61,6 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   const fontFamily = "Arial-BoldMT, Arial";
 
   const borderRadius = 4.5;
-  const logo = icons.logo(logoColor);
 
   return `
     <svg
@@ -76,7 +76,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        rx="${borderRadius}"
       />
       <g fill="${foreground}" transform="translate(${xOffset0+1},0) scale(0.9)" >
-        ${logo}
+        ${logo(logoColor)}
       </g>
       <!--text
        font-family="${fontFamily}"
