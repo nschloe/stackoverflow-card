@@ -27,9 +27,11 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
+    logoColor = foreground;
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
+    logoColor = foreground;
   } else {
     // fallback
     if (theme !== "stackoverflow-light") {
@@ -37,6 +39,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
     }
     background = "#fff";
     foreground = "#0f0f0f";
+    logoColor = "default";
   }
 
   iconColor = foreground;
@@ -57,6 +60,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
   const fontFamily = "Arial-BoldMT, Arial";
 
   const borderRadius = 4.5;
+  const logo = icons.logo(logoColor);
 
   return `
     <svg
@@ -72,7 +76,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        rx="${borderRadius}"
       />
       <g fill="${foreground}" transform="translate(${xOffset0+1},0) scale(0.9)" >
-        ${icons.logo}
+        ${logo}
       </g>
       <!--text
        font-family="${fontFamily}"
