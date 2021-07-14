@@ -23,13 +23,13 @@ function nFormatter(num, digits) {
     : "0";
 }
 
-const statLine = (icon, label, value) => {
+const statLine = (icon, iconColor, label, value) => {
   const showIcons = icon === null;
   const labelOffset = showIcons ? "" : `x="25"`;
   const shiftValuePos = 40;
   return `
-    ${icon}
-    <text ${labelOffset} y="12.5">${label}:</text>
+    <g fill="${iconColor}">${icon}</g>
+    <text ${labelOffset} y="12.5" fill="">${label}:</text>
     <text x="${
       (showIcons ? 100 : 120) + shiftValuePos
     }" y="12.5">${value}</text>
@@ -42,6 +42,7 @@ const StackOverflowCard = async (
   showLogo,
   showBorder,
   showIcons,
+  showAnimations,
   theme
 ) => {
   if (theme === "dracula") {
@@ -49,11 +50,14 @@ const StackOverflowCard = async (
     foreground = "#f8f8f2";
     strokeColor = "#44475a";
     logoColor = foreground;
+    // iconColor = "#8be9fd";
+    iconColor = foreground;
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
     strokeColor = "#404345";
     logoColor = foreground;
+    iconColor = foreground;
   } else {
     // fallback
     if (theme !== "stackoverflow-light") {
@@ -63,9 +67,8 @@ const StackOverflowCard = async (
     foreground = "#0f0f0f";
     strokeColor = "#d6d9dc";
     logoColor = "default";
+    iconColor = foreground;
   }
-
-  iconColor = foreground;
 
   const width = 325;
   const height = showLogo ? 135 : 105;
@@ -84,16 +87,19 @@ const StackOverflowCard = async (
 
   const lineRep = statLine(
     showIcons ? artwork.coinsMono(iconSize) : null,
+    iconColor,
     "Total Reputation",
     nFormatter(data.reputation, 1)
   );
   const lineRepYear = statLine(
     showIcons ? artwork.reputation(iconSize) : null,
+    iconColor,
     "Reputation this Year",
     nFormatter(data.reputation_change_year, 1)
   );
   const lineRating = statLine(
     showIcons ? artwork.achievementsSm(iconSize) : null,
+    iconColor,
     "Rating",
     ratingText
   );
@@ -111,10 +117,23 @@ const StackOverflowCard = async (
       </tspan>`;
   const lineBadges = statLine(
     showIcons ? artwork.medal(iconSize) : null,
+    iconColor,
     "Badges",
     badges,
     40
   );
+
+  lines = [lineRep, lineRepYear, lineRating, lineBadges];
+  linesStr = ``;
+  for (i = 0; i < lines.length; i++) {
+    anim = showAnimations
+      ? `class=\"fadein\" style=\"animation-delay: ${300 + i * 200}ms\"`
+      : "";
+    linesStr = linesStr.concat(`
+      <g ${anim} transform="translate(25, ${yOffset + i * 20})">
+        ${lines[i]}
+      </g>`);
+  }
 
   return `
     <svg
@@ -127,6 +146,21 @@ const StackOverflowCard = async (
      fill="${foreground}"
      font-weight="bold"
     >
+      <style>
+        .fadein {
+          animation: fadeInAnimation 0.8s ease-in-out forwards;
+          opacity: 0;
+        }
+        @keyframes fadeInAnimation {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      </style>
+
       <rect
        fill="${background}"
        width="${width}"
@@ -137,18 +171,7 @@ const StackOverflowCard = async (
       />
       ${logoSvg}
 
-      <g transform="translate(25, ${yOffset})">
-        ${lineRep}
-      </g>
-      <g transform="translate(25, ${yOffset + 20})">
-        ${lineRepYear}
-      </g>
-      <g transform="translate(25, ${yOffset + 40})">
-        ${lineRating}
-      </g>
-      <g transform="translate(25, ${yOffset + 60})">
-        ${lineBadges}
-      </g>
+      ${linesStr}
     </svg>
   `;
 };

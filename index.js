@@ -61,13 +61,9 @@ http
       ? stringToBoolean(searchParams.get("showIcons"))
       : true;
 
-    // [x] hide_title=true
-    // [ ] hide_border=true
-    // [ ] show_icons=true
-    // [ ] include_all_commits=true
-    // [ ] count_private=true
-    // [ ] line_height=21
-    // [x] theme=dracula
+    const showAnimations = searchParams.has("showAnimations")
+      ? stringToBoolean(searchParams.get("showAnimations"))
+      : true;
 
     const responseArticles = await fetch(
       `https://api.stackexchange.com/2.3/users/${userID}?site=stackoverflow`
@@ -92,6 +88,7 @@ http
       showLogo,
       showBorder,
       showIcons,
+      showAnimations,
       theme
     );
 
