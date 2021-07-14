@@ -31,7 +31,7 @@ const statLine = (icon, label, value) => {
     ${icon}
     <text ${labelOffset} y="12.5">${label}:</text>
     <text x="${
-      (showIcons ? 140 : 120) + shiftValuePos
+      (showIcons ? 100 : 120) + shiftValuePos
     }" y="12.5">${value}</text>
   `;
 };
