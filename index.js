@@ -53,6 +53,25 @@ http
       ? searchParams.get("theme")
       : "stackoverflow-light";
 
+    const showBorder = searchParams.has("showBorder")
+      ? stringToBoolean(searchParams.get("showBorder"))
+      : true;
+
+    const showIcons = searchParams.has("showIcons")
+      ? stringToBoolean(searchParams.get("showIcons"))
+      : true;
+
+    console.log(searchParams);
+    console.log(showLogo);
+
+    // [x] hide_title=true
+    // [ ] hide_border=true
+    // [ ] show_icons=true
+    // [ ] include_all_commits=true
+    // [ ] count_private=true
+    // [ ] line_height=21
+    // [x] theme=dracula
+
     const responseArticles = await fetch(
       `https://api.stackexchange.com/2.3/users/${userID}?site=stackoverflow`
     );
@@ -74,6 +93,8 @@ http
       json.items[0],
       ratingText,
       showLogo,
+      showBorder,
+      showIcons,
       theme
     );
 

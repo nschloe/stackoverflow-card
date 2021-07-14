@@ -1,5 +1,4 @@
-const icons = require("./icons.js");
-const logo = require("./logo.js");
+const artwork = require("./artwork.js");
 
 // https://stackoverflow.com/a/9462382/
 function nFormatter(num, digits) {
@@ -24,7 +23,24 @@ function nFormatter(num, digits) {
     : "0";
 }
 
-const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
+const statLine = (icon, label, value, shiftValuePos) => {
+  const showIcons = (icon === null);
+  const labelOffset = showIcons ? "" : `x="25"`;
+  return `
+    ${icon}
+    <text ${labelOffset} y="12.5">${label}:</text>
+    <text x="${(showIcons ? 140 : 120) + shiftValuePos}" y="12.5">${value}</text>
+  `;
+};
+
+const StackOverflowCard = async (
+  data,
+  ratingText,
+  showLogo,
+  showBorder,
+  showIcons,
+  theme
+) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
@@ -60,10 +76,7 @@ const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
   const width = 320;
   const height = 125;
   const fontSize = 12;
-  const xOffset0 = 13;
-  const xOffset1 = 35;
   const xOffset2 = 170;
-  const yOffset0 = 5;
   const baseYOffset = 57;
   const lineHeight = 17;
   const badgeRadius = 3.5;
@@ -72,64 +85,39 @@ const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
   const borderRadius = 4.5;
 
   if (showLogo) {
-    logoSvg = `<g fill="${foreground}" transform="translate(${xOffset0+1},${yOffset0}) scale(0.9)" >
-        ${logo(logoColor)}
+    logoSvg = `
+      <g fill="${foreground}" transform="translate(14, 5)">
+        ${artwork.logo(logoColor, 25)}
       </g>`;
   } else {
     logoSvg = ``;
   }
 
-  return `
-    <svg
-     width="${width}"
-     height="${height}"
-     viewBox="0 0 ${width} ${height}"
-     xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-       fill="${background}"
-       width="${width}"
-       height="${height}"
-       rx="${borderRadius}"
-      />
-      ${logoSvg}
-      <text
-       font-family="${fontFamily}"
-       font-size="${fontSize}"
-       fill="${foreground}"
-       font-weight="bold"
-      >
-        <tspan x="${xOffset1}" y="${baseYOffset}">Total Reputation:</tspan>
-        <tspan x="${xOffset2}" y="${baseYOffset}">
-          ${nFormatter(data.reputation, 1)}
-        </tspan>
-        <tspan x="${xOffset1}" y="${baseYOffset + lineHeight}">
-          Reputation this Year:
-        </tspan>
-        <tspan x="${xOffset2}" y="${baseYOffset + lineHeight}">
-          +${nFormatter(data.reputation_change_year, 1)}
-        </tspan>
-        <tspan x="${xOffset1}" y="${baseYOffset + 2 * lineHeight}">
-          Rating:
-        </tspan>
-        <tspan x="${xOffset2}" y="${baseYOffset + 2 * lineHeight}">
-          ${ratingText}
-        </tspan>
-        <tspan x="${xOffset1}" y="${baseYOffset + 3 * lineHeight}">
-          Badges:
-        </tspan>
-      </text>
-      <g fill="${iconColor}" transform="translate(${xOffset0},${baseYOffset-12}) scale(0.9)" >
-        ${icons.coinsMono}
-      </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+1},${baseYOffset+4}) scale(0.9)" >
-        ${icons.reputation}
-      </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+3},${baseYOffset+24}) scale(0.9)" >
-        ${icons.achievementsSm}
-      </g>
-      <g fill="${iconColor}" transform="translate(${xOffset0+2},${baseYOffset+40}) scale(0.8)" >
-        ${icons.medal}
+  const iconSize = 16;
+
+  const lineRep = statLine(
+      artwork.coinsMono(iconSize),
+      "Total Reputation",
+      nFormatter(data.reputation, 1),
+      40
+    );
+  const lineRepYear = statLine(
+      artwork.reputation(iconSize),
+      "Reputation this Year",
+      nFormatter(data.reputation_change_year, 1),
+      40
+    );
+  const lineRating = statLine(
+      artwork.achievementsSm(iconSize),
+      "Rating",
+      ratingText,
+      40
+    );
+
+  const badges = `
+      X
+      <g>
+      X
       </g>
       <g fill="${gold}">
         <circle
@@ -137,15 +125,11 @@ const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
          cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
          r="${badgeRadius}"
         />
-        <text
-         font-family="${fontFamily}"
-         font-size="${fontSize}"
-         font-weight="bold"
-         >
-          <tspan
+        <text>X
+          <!--tspan
            x="${xOffset2 + 10}"
            y="${baseYOffset + 3 * lineHeight}"
-          >${data.badge_counts.gold}</tspan>
+          >${data.badge_counts.gold}</tspan-->
         </text>
       </g>
       <g fill="${silver}">
@@ -154,11 +138,7 @@ const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
          cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
          r="${badgeRadius}"
         />
-        <text
-         font-family="${fontFamily}"
-         font-size="${fontSize}"
-         font-weight="bold"
-        >
+        <text>
           <tspan
            x="${xOffset2 + badgeRadius + 42}"
            y="${baseYOffset + 3 * lineHeight}"
@@ -170,16 +150,49 @@ const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
          cx="${xOffset2 + badgeRadius + 80}"
          cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
          r="${badgeRadius}"/>
-        <text
-         font-family="${fontFamily}"
-         font-size="${fontSize}"
-         font-weight="bold"
-        >
+        <text>
           <tspan
            x="${xOffset2 + badgeRadius + 90}"
            y="${baseYOffset + 3 * lineHeight}"
           >${data.badge_counts.bronze}</tspan>
         </text>
+      </g>`;
+  const lineBadges = statLine(
+      artwork.medal(iconSize),
+      "Badges",
+      badges,
+      40
+    );
+
+  return `
+    <svg
+     width="${width}"
+     height="${height}"
+     viewBox="0 0 ${width} ${height}"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="${fontFamily}"
+     font-size="${fontSize}"
+     fill="${foreground}"
+     font-weight="bold"
+    >
+      <rect
+       fill="${background}"
+       width="${width}"
+       height="${height}"
+       rx="${borderRadius}"
+      />
+
+      <g transform="translate(25, 25)">
+        ${lineRep}
+      </g>
+      <g transform="translate(25, 45)">
+        ${lineRepYear}
+      </g>
+      <g transform="translate(25, 65)">
+        ${lineRating}
+      </g>
+      <g transform="translate(25, 85)">
+        ${lineBadges}
       </g>
     </svg>
   `;
