@@ -22,19 +22,33 @@ themes = {
     icon: "#0f0f0f",
   },
   gruvboxdark: {
-      background: "#282828",
-      foreground: "#ebdab4",
-      border: "#7c6f65",
-      logo: "#ebdab4",
-      icon: "#ebdab4",
-    },
+    background: "#282828",
+    foreground: "#ebdab4",
+    border: "#7c6f65",
+    logo: "#ebdab4",
+    icon: "#ebdab4",
+  },
   gruvboxlight: {
-      background: "#fbf0c9",
-      foreground: "#3c3836",
-      border: "#a89985",
-      logo: "default",
-      icon: "#3c3836",
-    },
-}
+    background: "#fbf0c9",
+    foreground: "#3c3836",
+    border: "#a89985",
+    logo: "default",
+    icon: "#3c3836",
+  },
+  solarizeddark: {
+    background: "#002b36",
+    foreground: "#839294",
+    border: "#073642",
+    logo: "#839294",
+    icon: "#839294",
+  },
+  solarizedlight: {
+    background: "#fdf6e3",
+    foreground: "#586e75",
+    border: "#eee8d5",
+    logo: "default",
+    icon: "#586e75",
+  },
+};
 
 module.exports = themes;
