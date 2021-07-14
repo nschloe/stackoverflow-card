@@ -24,7 +24,7 @@ function nFormatter(num, digits) {
     : "0";
 }
 
-const StackOverflowCard = async (data, ratingText, theme) => {
+const StackOverflowCard = async (data, ratingText, showLogo, theme) => {
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
@@ -42,6 +42,14 @@ const StackOverflowCard = async (data, ratingText, theme) => {
     foreground = "#0f0f0f";
     logoColor = "default";
   }
+
+  // hide_title=true
+  // hide_border=true
+  // show_icons=true
+  // include_all_commits=true
+  // count_private=true
+  // line_height=21
+  // theme=dracula
 
   iconColor = foreground;
 
@@ -63,6 +71,14 @@ const StackOverflowCard = async (data, ratingText, theme) => {
 
   const borderRadius = 4.5;
 
+  if (showLogo) {
+    logoSvg = `<g fill="${foreground}" transform="translate(${xOffset0+1},${yOffset0}) scale(0.9)" >
+        ${logo(logoColor)}
+      </g>`;
+  } else {
+    logoSvg = ``;
+  }
+
   return `
     <svg
      width="${width}"
@@ -76,9 +92,7 @@ const StackOverflowCard = async (data, ratingText, theme) => {
        height="${height}"
        rx="${borderRadius}"
       />
-      <g fill="${foreground}" transform="translate(${xOffset0+1},${yOffset0}) scale(0.9)" >
-        ${logo(logoColor)}
-      </g>
+      ${logoSvg}
       <text
        font-family="${fontFamily}"
        font-size="${fontSize}"
