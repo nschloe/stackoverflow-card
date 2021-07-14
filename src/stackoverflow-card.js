@@ -74,15 +74,7 @@ const StackOverflowCard = async (
   const bronze = "#AB825F";
 
   const width = 320;
-  const height = 125;
-  const fontSize = 12;
-  const xOffset2 = 170;
-  const baseYOffset = 57;
-  const lineHeight = 17;
-  const badgeRadius = 3.5;
-  const fontFamily = "Arial-BoldMT, Arial";
-
-  const borderRadius = 4.5;
+  const height = 135;
 
   if (showLogo) {
     logoSvg = `
@@ -115,48 +107,16 @@ const StackOverflowCard = async (
     );
 
   const badges = `
-      X
-      <g>
-      X
-      </g>
-      <g fill="${gold}">
-        <circle
-         cx="${xOffset2 + badgeRadius}"
-         cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
-         r="${badgeRadius}"
-        />
-        <text>X
-          <!--tspan
-           x="${xOffset2 + 10}"
-           y="${baseYOffset + 3 * lineHeight}"
-          >${data.badge_counts.gold}</tspan-->
-        </text>
-      </g>
-      <g fill="${silver}">
-        <circle
-         cx="${xOffset2 + badgeRadius + 35}"
-         cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
-         r="${badgeRadius}"
-        />
-        <text>
-          <tspan
-           x="${xOffset2 + badgeRadius + 42}"
-           y="${baseYOffset + 3 * lineHeight}"
-          >${data.badge_counts.silver}</tspan>
-        </text>
-      </g>
-      <g fill="${bronze}">
-        <circle
-         cx="${xOffset2 + badgeRadius + 80}"
-         cy="${baseYOffset + 3 * lineHeight - badgeRadius}"
-         r="${badgeRadius}"/>
-        <text>
-          <tspan
-           x="${xOffset2 + badgeRadius + 90}"
-           y="${baseYOffset + 3 * lineHeight}"
-          >${data.badge_counts.bronze}</tspan>
-        </text>
-      </g>`;
+      <circle cx="0" cy="0" r="5"/>
+      <tspan fill="${gold}">
+        ● ${data.badge_counts.gold}
+      </tspan>
+      <tspan fill="${silver}" dx="1em">
+        ● ${data.badge_counts.silver}
+      </tspan>
+      <tspan fill="${bronze}" dx="1em">
+        ● ${data.badge_counts.bronze}
+      </tspan>`;
   const lineBadges = statLine(
       artwork.medal(iconSize),
       "Badges",
@@ -170,8 +130,8 @@ const StackOverflowCard = async (
      height="${height}"
      viewBox="0 0 ${width} ${height}"
      xmlns="http://www.w3.org/2000/svg"
-     font-family="${fontFamily}"
-     font-size="${fontSize}"
+     font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Liberation Sans,sans-serif"
+     font-size="12"
      fill="${foreground}"
      font-weight="bold"
     >
@@ -179,19 +139,20 @@ const StackOverflowCard = async (
        fill="${background}"
        width="${width}"
        height="${height}"
-       rx="${borderRadius}"
+       rx="4.5"
       />
+      ${logoSvg}
 
-      <g transform="translate(25, 25)">
+      <g transform="translate(25, 40)">
         ${lineRep}
       </g>
-      <g transform="translate(25, 45)">
+      <g transform="translate(25, 60)">
         ${lineRepYear}
       </g>
-      <g transform="translate(25, 65)">
+      <g transform="translate(25, 80)">
         ${lineRating}
       </g>
-      <g transform="translate(25, 85)">
+      <g transform="translate(25, 100)">
         ${lineBadges}
       </g>
     </svg>
