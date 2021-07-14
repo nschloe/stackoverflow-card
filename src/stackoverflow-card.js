@@ -80,7 +80,7 @@ const StackOverflowCard = async (
     showIcons ? artwork.reputation(iconSize) : null,
     colors.icon,
     "Reputation this Year",
-    nFormatter(data.reputation_change_year, 1)
+    "+" + nFormatter(data.reputation_change_year, 1)
   );
   const lineRating = statLine(
     showIcons ? artwork.achievementsSm(iconSize) : null,
