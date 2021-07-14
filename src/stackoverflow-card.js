@@ -1,4 +1,5 @@
 const artwork = require("./artwork.js");
+const themes = require("./themes.js");
 
 // https://stackoverflow.com/a/9462382/
 function nFormatter(num, digits) {
@@ -45,29 +46,14 @@ const StackOverflowCard = async (
   showAnimations,
   theme
 ) => {
-  if (theme === "dracula") {
-    background = "#282a36";
-    foreground = "#f8f8f2";
-    strokeColor = "#44475a";
-    logoColor = foreground;
-    // iconColor = "#8be9fd";
-    iconColor = foreground;
-  } else if (theme === "stackoverflow-dark") {
-    background = "#2D2D2D";
-    foreground = "#F2F2F3";
-    strokeColor = "#404345";
-    logoColor = foreground;
-    iconColor = foreground;
+  // normalize scheme name: remove all non-alphanumeric chars, lowercase
+  theme = theme.replace(/\W/g, "").toLowerCase();
+
+  if (theme in themes) {
+    colors = themes[theme];
   } else {
-    // fallback
-    if (theme !== "stackoverflow-light") {
-      console.warn("Illegal theme " + theme);
-    }
-    background = "#fff";
-    foreground = "#0f0f0f";
-    strokeColor = "#d6d9dc";
-    logoColor = "default";
-    iconColor = foreground;
+    console.warn("Illegal theme " + theme);
+    colors = themes["stackoverflowlight"];
   }
 
   const width = 325;
@@ -77,7 +63,7 @@ const StackOverflowCard = async (
   if (showLogo) {
     logoSvg = `
       <g transform="translate(14, 5)">
-        ${artwork.logo(logoColor, 25)}
+        ${artwork.logo(colors.logo, 25)}
       </g>`;
   } else {
     logoSvg = ``;
@@ -87,19 +73,19 @@ const StackOverflowCard = async (
 
   const lineRep = statLine(
     showIcons ? artwork.coinsMono(iconSize) : null,
-    iconColor,
+    colors.icon,
     "Total Reputation",
     nFormatter(data.reputation, 1)
   );
   const lineRepYear = statLine(
     showIcons ? artwork.reputation(iconSize) : null,
-    iconColor,
+    colors.icon,
     "Reputation this Year",
     nFormatter(data.reputation_change_year, 1)
   );
   const lineRating = statLine(
     showIcons ? artwork.achievementsSm(iconSize) : null,
-    iconColor,
+    colors.icon,
     "Rating",
     ratingText
   );
@@ -117,7 +103,7 @@ const StackOverflowCard = async (
       </tspan>`;
   const lineBadges = statLine(
     showIcons ? artwork.medal(iconSize) : null,
-    iconColor,
+    colors.icon,
     "Badges",
     badges,
     40
@@ -143,7 +129,7 @@ const StackOverflowCard = async (
      xmlns="http://www.w3.org/2000/svg"
      font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Liberation Sans,sans-serif"
      font-size="12"
-     fill="${foreground}"
+     fill="${colors.foreground}"
      font-weight="bold"
     >
       <style>
@@ -162,10 +148,10 @@ const StackOverflowCard = async (
       </style>
 
       <rect
-       fill="${background}"
+       fill="${colors.background}"
        width="${width}"
        height="${height}"
-       stroke="${strokeColor}"
+       stroke="${colors.border}"
        stroke-opacity="${showBorder ? 1 : 0}"
        rx="4.5"
       />
