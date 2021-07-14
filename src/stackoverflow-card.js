@@ -23,13 +23,16 @@ function nFormatter(num, digits) {
     : "0";
 }
 
-const statLine = (icon, label, value, shiftValuePos) => {
-  const showIcons = (icon === null);
+const statLine = (icon, label, value) => {
+  const showIcons = icon === null;
   const labelOffset = showIcons ? "" : `x="25"`;
+  const shiftValuePos = 40;
   return `
     ${icon}
     <text ${labelOffset} y="12.5">${label}:</text>
-    <text x="${(showIcons ? 140 : 120) + shiftValuePos}" y="12.5">${value}</text>
+    <text x="${
+      (showIcons ? 140 : 120) + shiftValuePos
+    }" y="12.5">${value}</text>
   `;
 };
 
@@ -44,10 +47,12 @@ const StackOverflowCard = async (
   if (theme === "dracula") {
     background = "#282a36";
     foreground = "#f8f8f2";
+    strokeColor = "#44475a";
     logoColor = foreground;
   } else if (theme === "stackoverflow-dark") {
     background = "#2D2D2D";
     foreground = "#F2F2F3";
+    strokeColor = "#404345";
     logoColor = foreground;
   } else {
     // fallback
@@ -56,29 +61,19 @@ const StackOverflowCard = async (
     }
     background = "#fff";
     foreground = "#0f0f0f";
+    strokeColor = "#d6d9dc";
     logoColor = "default";
   }
 
-  // hide_title=true
-  // hide_border=true
-  // show_icons=true
-  // include_all_commits=true
-  // count_private=true
-  // line_height=21
-  // theme=dracula
-
   iconColor = foreground;
 
-  const gold = "#F1B600";
-  const silver = "#9A9B9E";
-  const bronze = "#AB825F";
-
-  const width = 320;
-  const height = 135;
+  const width = 325;
+  const height = showLogo ? 135 : 105;
+  const yOffset = showLogo ? 40 : 10;
 
   if (showLogo) {
     logoSvg = `
-      <g fill="${foreground}" transform="translate(14, 5)">
+      <g transform="translate(14, 5)">
         ${artwork.logo(logoColor, 25)}
       </g>`;
   } else {
@@ -88,41 +83,38 @@ const StackOverflowCard = async (
   const iconSize = 16;
 
   const lineRep = statLine(
-      artwork.coinsMono(iconSize),
-      "Total Reputation",
-      nFormatter(data.reputation, 1),
-      40
-    );
+    showIcons ? artwork.coinsMono(iconSize) : null,
+    "Total Reputation",
+    nFormatter(data.reputation, 1)
+  );
   const lineRepYear = statLine(
-      artwork.reputation(iconSize),
-      "Reputation this Year",
-      nFormatter(data.reputation_change_year, 1),
-      40
-    );
+    showIcons ? artwork.reputation(iconSize) : null,
+    "Reputation this Year",
+    nFormatter(data.reputation_change_year, 1)
+  );
   const lineRating = statLine(
-      artwork.achievementsSm(iconSize),
-      "Rating",
-      ratingText,
-      40
-    );
+    showIcons ? artwork.achievementsSm(iconSize) : null,
+    "Rating",
+    ratingText
+  );
 
+  // colors from stackoverflow
   const badges = `
-      <circle cx="0" cy="0" r="5"/>
-      <tspan fill="${gold}">
+      <tspan fill="#F1B600">
         ● ${data.badge_counts.gold}
       </tspan>
-      <tspan fill="${silver}" dx="1em">
+      <tspan fill="#9A9B9E" dx="1em">
         ● ${data.badge_counts.silver}
       </tspan>
-      <tspan fill="${bronze}" dx="1em">
+      <tspan fill="#AB825F" dx="1em">
         ● ${data.badge_counts.bronze}
       </tspan>`;
   const lineBadges = statLine(
-      artwork.medal(iconSize),
-      "Badges",
-      badges,
-      40
-    );
+    showIcons ? artwork.medal(iconSize) : null,
+    "Badges",
+    badges,
+    40
+  );
 
   return `
     <svg
@@ -139,20 +131,22 @@ const StackOverflowCard = async (
        fill="${background}"
        width="${width}"
        height="${height}"
+       stroke="${strokeColor}"
+       stroke-opacity="${showBorder ? 1 : 0}"
        rx="4.5"
       />
       ${logoSvg}
 
-      <g transform="translate(25, 40)">
+      <g transform="translate(25, ${yOffset})">
         ${lineRep}
       </g>
-      <g transform="translate(25, 60)">
+      <g transform="translate(25, ${yOffset + 20})">
         ${lineRepYear}
       </g>
-      <g transform="translate(25, 80)">
+      <g transform="translate(25, ${yOffset + 40})">
         ${lineRating}
       </g>
-      <g transform="translate(25, 100)">
+      <g transform="translate(25, ${yOffset + 60})">
         ${lineBadges}
       </g>
     </svg>

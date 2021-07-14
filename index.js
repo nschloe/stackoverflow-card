@@ -61,9 +61,6 @@ http
       ? stringToBoolean(searchParams.get("showIcons"))
       : true;
 
-    console.log(searchParams);
-    console.log(showLogo);
-
     // [x] hide_title=true
     // [ ] hide_border=true
     // [ ] show_icons=true
