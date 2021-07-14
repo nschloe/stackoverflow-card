@@ -49,6 +49,41 @@ themes = {
     logo: "default",
     icon: "#586e75",
   },
+  tomorrownight: {
+    background: "#1d1f21",
+    foreground: "#c5c8c6",
+    border: "#373b41",
+    logo: "#c5c8c6",
+    icon: "#c5c8c6",
+  },
+  tomorrow: {
+    background: "#ffffff",
+    foreground: "#4d4d4c",
+    border: "#d6d6d6",
+    logo: "default",
+    icon: "#4d4d4c",
+  },
+  tomorrownighteighties: {
+    background: "#2d2d2d",
+    foreground: "#cccccc",
+    border: "#515151",
+    logo: "#cccccc",
+    icon: "#cccccc",
+  },
+  tomorrownightblue: {
+    background: "#002451",
+    foreground: "#ffffff",
+    border: "#003f8e",
+    logo: "#ffffff",
+    icon: "#ffffff",
+  },
+  tomorrownightbright: {
+    background: "#000000",
+    foreground: "#eaeaea",
+    border: "#424242",
+    logo: "#eaeaea",
+    icon: "#eaeaea",
+  },
 };
 
 module.exports = themes;
