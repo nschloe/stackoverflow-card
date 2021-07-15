@@ -57,11 +57,11 @@ const StackOverflowCard = async (
   }
 
   const width = 325;
-  const height = showLogo ? 145 : 105;
+  const height = showLogo ? 150 : 105;
 
   if (showLogo) {
     logoSvg = `
-      <g transform="translate(14, 10)">
+      <g transform="translate(14, 15)">
         ${artwork.logo(colors.logo, 25)}
       </g>`;
   } else {
@@ -110,7 +110,7 @@ const StackOverflowCard = async (
 
   lines = [lineRep, lineRepYear, lineRating, lineBadges];
   linesStr = ``;
-  const yOffset = showLogo ? 50 : 0;
+  const yOffset = showLogo ? 55 : 0;
   for (i = 0; i < lines.length; i++) {
     anim = showAnimations
       ? `class=\"fadein\" style=\"animation-delay: ${300 + i * 200}ms\"`
