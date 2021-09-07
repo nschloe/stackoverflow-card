@@ -1,7 +1,6 @@
-const http = require("http");
-const url = require("url");
-const fetch = require("node-fetch");
-const StackOverflowCard = require("./src/stackoverflow-card");
+import http from "http";
+import fetch from "node-fetch";
+import { StackOverflowCard } from "./src/stackoverflow-card.js";
 
 const stringToBoolean = function (string) {
   switch (string.toLowerCase().trim()) {
@@ -92,12 +91,12 @@ http
       theme
     );
 
-    res.setHeader(
-      "Cache-Control",
-      "private, no-cache, no-store, must-revalidate"
-    );
-    res.setHeader("Expires", "-1");
-    res.setHeader("Pragma", "no-cache");
+    // res.setHeader(
+    //   "Cache-Control",
+    //   "private, no-cache, no-store, must-revalidate"
+    // );
+    // res.setHeader("Expires", "-1");
+    // res.setHeader("Pragma", "no-cache");
     res.writeHead(200, { "Content-Type": "image/svg+xml" });
 
     res.write(result);

@@ -1,5 +1,11 @@
-const artwork = require("./artwork.js");
-const themes = require("./themes.js");
+import {
+  coinsMono,
+  reputation,
+  achievementsSm,
+  medal,
+  logo,
+} from "./artwork.js";
+import { themes } from "./themes.js";
 
 // https://stackoverflow.com/a/9462382/
 function nFormatter(num, digits) {
@@ -37,7 +43,7 @@ const statLine = (icon, iconColor, label, value) => {
   `;
 };
 
-const StackOverflowCard = async (
+export const StackOverflowCard = async (
   data,
   ratingText,
   showLogo,
@@ -49,6 +55,7 @@ const StackOverflowCard = async (
   // normalize scheme name: remove all non-alphanumeric chars, lowercase
   theme = theme.replace(/\W/g, "").toLowerCase();
 
+  let colors;
   if (theme in themes) {
     colors = themes[theme];
   } else {
@@ -59,10 +66,11 @@ const StackOverflowCard = async (
   const width = 325;
   const height = showLogo ? 150 : 105;
 
+  let logoSvg;
   if (showLogo) {
     logoSvg = `
       <g transform="translate(14, 15)">
-        ${artwork.logo(colors.logo, 25)}
+        ${logo(colors.logo, 25)}
       </g>`;
   } else {
     logoSvg = ``;
@@ -71,19 +79,19 @@ const StackOverflowCard = async (
   const iconSize = 16;
 
   const lineRep = statLine(
-    showIcons ? artwork.coinsMono(iconSize) : null,
+    showIcons ? coinsMono(iconSize) : null,
     colors.icon,
     "Total Reputation",
     nFormatter(data.reputation, 1)
   );
   const lineRepYear = statLine(
-    showIcons ? artwork.reputation(iconSize) : null,
+    showIcons ? reputation(iconSize) : null,
     colors.icon,
     "Reputation this Year",
     "+" + nFormatter(data.reputation_change_year, 1)
   );
   const lineRating = statLine(
-    showIcons ? artwork.achievementsSm(iconSize) : null,
+    showIcons ? achievementsSm(iconSize) : null,
     colors.icon,
     "Rating",
     ratingText
@@ -101,18 +109,18 @@ const StackOverflowCard = async (
         ● ${data.badge_counts.bronze}
       </tspan>`;
   const lineBadges = statLine(
-    showIcons ? artwork.medal(iconSize) : null,
+    showIcons ? medal(iconSize) : null,
     colors.icon,
     "Badges",
     badges,
     40
   );
 
-  lines = [lineRep, lineRepYear, lineRating, lineBadges];
-  linesStr = ``;
+  const lines = [lineRep, lineRepYear, lineRating, lineBadges];
+  let linesStr = ``;
   const yOffset = showLogo ? 55 : 0;
-  for (i = 0; i < lines.length; i++) {
-    anim = showAnimations
+  for (let i = 0; i < lines.length; i++) {
+    const anim = showAnimations
       ? `class=\"fadein\" style=\"animation-delay: ${300 + i * 200}ms\"`
       : "";
     linesStr = linesStr.concat(`
@@ -161,5 +169,3 @@ const StackOverflowCard = async (
     </svg>
   `;
 };
-
-module.exports = StackOverflowCard;
