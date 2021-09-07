@@ -1,4 +1,4 @@
-themes = {
+export const themes = {
   dracula: {
     background: "#282a36",
     foreground: "#f8f8f2",
@@ -85,5 +85,3 @@ themes = {
     icon: "#eaeaea",
   },
 };
-
-module.exports = themes;

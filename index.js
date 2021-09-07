@@ -1,7 +1,6 @@
-const http = require("http");
-const url = require("url");
-const fetch = require("node-fetch");
-const StackOverflowCard = require("./src/stackoverflow-card");
+import http from "http";
+import fetch from "node-fetch";
+import { StackOverflowCard } from "./src/stackoverflow-card.js";
 
 const stringToBoolean = function (string) {
   switch (string.toLowerCase().trim()) {
