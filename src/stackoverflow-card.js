@@ -68,12 +68,15 @@ export const StackOverflowCard = async (
 
   let logoSvg;
   if (showLogo) {
+    // The y-offset in the text is chosen such that the logo and tex baselines
+    // align
     logoSvg = `
       <g transform="translate(14, 15)">
         ${logo(colors.logo, 25)}
+        <text x="140" y="20.69" fill="" font-size="10">for ${data.display_name}</text>
       </g>`;
   } else {
-    logoSvg = ``;
+    logoSvg = `<text x="20" y="35" fill="" font-size="15">StackOverflow stats for ${data.display_name}</text>`;
   }
 
   const iconSize = 16;
