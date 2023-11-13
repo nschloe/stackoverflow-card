@@ -36,7 +36,12 @@ Use `&theme=THEME_NAME` parameter like so:
 ```
 ![StackOverflow Card](https://stackoverflow-card.vercel.app/?userID=353337&theme=dracula)
 ```
+<details>
+<summary>Show example</summary>
+  
 ![StackOverflow Card](https://stackoverflow-card.vercel.app/?userID=353337&theme=dracula)
+
+</details>
 
 #### All built-in themes
 StackOverflow Card comes with several built-in themes (E.g. `dracula`, `stackoverflowdark`, `stackoverflowdark`, `gruvboxdark`, `gruvboxlight`, `solarizeddark`, `solarizedlight`, `tomorrownight`, `tomorrow`).
