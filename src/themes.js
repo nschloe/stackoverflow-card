@@ -84,4 +84,11 @@ export const themes = {
     logo: "#eaeaea",
     icon: "#eaeaea",
   },
+  githubdark: {
+    background: "#0E1116",
+    foreground: "#eaeaea",
+    border: "#0E1116",
+    logo: "#eaeaea",
+    icon: "#eaeaea",
+  }
 };
