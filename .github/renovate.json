@@ -3,7 +3,7 @@
     "before 3am on Monday"
   ],
   "extends": [
-    "config:base",
+    "config:recommended",
     "group:allNonMajor"
   ]
 }
